@@ -8,9 +8,7 @@
  */
 package wile.rsgauges;
 
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -25,11 +23,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import wile.rsgauges.detail.BlockCategories;
-import wile.rsgauges.items.ModBlockItem;
-import wile.rsgauges.libmc.detail.Auxiliaries;
-import wile.rsgauges.libmc.detail.OptionalRecipeCondition;
-import wile.rsgauges.libmc.detail.PlayerBlockInteraction;
-import wile.rsgauges.libmc.detail.Registries;
+import wile.rsgauges.libmc.detail.*;
 
 import java.util.List;
 
@@ -63,14 +57,11 @@ public class ModRsGauges
   {
     if(event.getTab() == Registries.RSGAUGES_TAB.get())
     {
-      List<Block> balls = Registries.getRegisteredBlocks();
-      List<Item> cum = Registries.getRegisteredItems();
+      List<Block> blocks = Registries.getRegisteredBlocks();
+      List<Item> items = Registries.getRegisteredItems();
 
-      balls.forEach((b) -> event.accept(b));
-      cum.forEach((c) -> event.accept(c));
-
-//      event.accept(balls.);
-//      event.accept(cum);
+      blocks.forEach((b) -> event.accept(b));
+      items.forEach((i) -> event.accept(i));
     }
   }
 
@@ -90,7 +81,7 @@ public class ModRsGauges
 
     public static void onClientSetup(final FMLClientSetupEvent event)
     {
-      wile.rsgauges.libmc.detail.Overlay.register();
+      Overlay.register();
       ModContent.processContentClientSide(event);
     }
 

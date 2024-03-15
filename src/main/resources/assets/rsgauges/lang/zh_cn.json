@@ -269,7 +269,7 @@
   "rsgauges.switchconfig.intervaltimer.t_off": "低值时间: %1$s秒",
   "rsgauges.switchconfig.intervaltimer.t_on": "高值时间: %1$s秒",
   "rsgauges.switchconfig.lightsensor": "%1$s %2$s %3$s %4$s",
-  "rsgauges.switchconfig.lightsensor.debounce": "去抖动: %1$s %2$s",
+  "rsgauges.switchconfig.lightsensor.debounce": "去抖动: %1$s",
   "rsgauges.switchconfig.lightsensor.lightunit": "亮度",
   "rsgauges.switchconfig.lightsensor.output_power": "信号强度: %1$s",
   "rsgauges.switchconfig.lightsensor.threshold_off": "关阈值: %1$s %2$s",

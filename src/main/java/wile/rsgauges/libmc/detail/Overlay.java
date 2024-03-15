@@ -9,7 +9,6 @@
 package wile.rsgauges.libmc.detail;
 
 import com.mojang.blaze3d.platform.Window;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
@@ -88,6 +87,14 @@ public class Overlay
     TextOverlayGui()
     { super(Component.literal("")); mc = SidedProxy.mc(); }
 
+    @Override
+    protected void init()
+    { super.init(); }
+
+    @Override
+    public void tick()
+    { super.tick(); }
+
     @SubscribeEvent
     public void onRenderGui(RenderGuiOverlayEvent event)
     {
@@ -97,20 +104,39 @@ public class Overlay
       String txt = text().getString();
       if(txt.isEmpty()) return;
 
-      PoseStack mxs = event.getGuiGraphics().pose();
-      final Window win = mc.getWindow();
       final Font fr = mc.font;
+      final Window win = mc.getWindow();
       final boolean was_unicode = fr.isBidirectional();
       final int cx = win.getGuiScaledWidth() / 2;
       final int cy = (int)(win.getGuiScaledHeight() * overlay_y_);
+
+      GuiGraphics graphics = event.getGuiGraphics();
+      float partialTick = event.getPartialTick();
+
+      render(graphics, cx, cy, partialTick);
+    }
+
+    @Override
+    public void render(GuiGraphics graphics, int cx, int cy, float partialTick)
+    {
+//      PoseStack mxs = event.getGuiGraphics().pose();
+      if(deadline() < System.currentTimeMillis()) return;
+      if(text()==EMPTY_TEXT) return;
+      String txt = text().getString();
+      if(txt.isEmpty()) return;
+
+      final Font fr = mc.font;
       final int w = fr.width(txt);
       final int h = fr.lineHeight;
-//      GuiGraphics.fillGradient(mxs, cx-(w/2)-3, cy-2, cx+(w/2)+2, cy+h+2, 0xaa333333, 0xaa444444);
-//      GuiGraphics.hLine(mxs, cx-(w/2)-3, cx+(w/2)+2, cy-2, 0xaa333333);
-//      GuiGraphics.hLine(mxs, cx-(w/2)-3, cx+(w/2)+2, cy+h+2, 0xaa333333);
-//      GuiGraphics.vLine(mxs, cx-(w/2)-3, cy-2, cy+h+2, 0xaa333333);
-//      GuiGraphics.vLine(mxs, cx+(w/2)+2, cy-2, cy+h+2, 0xaa333333);
-//      GuiGraphics.drawCenteredString(mxs, fr, text(), cx , cy+1, 0x00ffaa00);
+
+      graphics.hLine(cx-(w/2)-3, cx+(w/2)+2, cy-2, 0xaa333333);
+      graphics.hLine(cx-(w/2)-3, cx+(w/2)+2, cy+h+2, 0xaa333333);
+      graphics.vLine(cx-(w/2)-3, cy-2, cy+h+2, 0xaa333333);
+      graphics.vLine(cx+(w/2)+2, cy-2, cy+h+2, 0xaa333333);
+      graphics.drawCenteredString(fr, text(), cx , cy+1, 0x00ffaa00);
+      graphics.fillGradient(cx-(w/2)-3, cy-2, cx+(w/2)+2, cy+h+2, 0xaa333333, 0xaa444444);
+
+      super.render(graphics, cx, cy, partialTick);
     }
   }
 
