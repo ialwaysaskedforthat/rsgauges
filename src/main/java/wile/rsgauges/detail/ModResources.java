@@ -26,7 +26,8 @@ public class ModResources
 {
   public static RegistryObject<SoundEvent> createSoundEvent(String name)
   {
-    return Registries.sound_deferred_register.register(name, () -> new SoundEvent(new ResourceLocation(ModRsGauges.MODID, name)));
+    ResourceLocation id = new ResourceLocation(ModRsGauges.MODID, name);
+    return Registries.sound_deferred_register.register(name, () -> SoundEvent.createVariableRangeEvent(id));
   }
 
   /**

@@ -129,7 +129,7 @@ public abstract class RsDirectedBlock extends RsBlock
   @Override
   public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos)
   {
-    if(isCube() || ((!world.isEmptyBlock(facingPos)) && (!facingState.getMaterial().isLiquid()))) return state;
+    if(isCube() || ((!world.isEmptyBlock(facingPos)) && (!facingState.liquid()))) return state;
     Direction blockfacing = state.getValue(FACING);
     if((!isWallMount()) && (isLateral()) && (facing==Direction.DOWN)) return Blocks.AIR.defaultBlockState(); // floor mount, e.g. contact mats
     if(isWallMount() && (!isLateral()) && (facing==state.getValue(FACING).getOpposite())) return Blocks.AIR.defaultBlockState(); // wallmount are placed facing the player
@@ -180,7 +180,7 @@ public abstract class RsDirectedBlock extends RsBlock
     if(!pos.relative(state.getValue(FACING).getOpposite()).equals(neighborPos)) return false;
     final BlockState neighborState = world.getBlockState(neighborPos);
     if(neighborState == null) return false;
-    if((world.isEmptyBlock(neighborPos)) || (neighborState.getMaterial().isLiquid())) return false;
+    if((world.isEmptyBlock(neighborPos)) || (neighborState.liquid())) return false;
     return true;
   }
 

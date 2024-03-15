@@ -82,12 +82,14 @@ public class SensitiveGlassBlock extends RsBlock
   }
 
   @Override
-  public boolean isPossibleToRespawnInThis()
-  { return false; }
+  public boolean isPossibleToRespawnInThis(BlockState state)
+  {
+    return false;
+  }
 
-  @Override
-  public boolean shouldCheckWeakPower(BlockState state, LevelReader world, BlockPos pos, Direction side)
-  { return true; }
+//  @Override
+//  public boolean shouldCheckWeakPower(BlockState state, LevelReader world, BlockPos pos, Direction side)
+//  { return true; }
 
   @Override
   protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)

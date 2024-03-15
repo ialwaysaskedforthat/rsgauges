@@ -16,11 +16,10 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -41,25 +40,25 @@ public class ModContent
     //public static Boolean disallowSpawn(BlockState state, BlockGetter reader, BlockPos pos, EntityType<?> entity) { return false; }
 
     public static final BlockBehaviour.Properties gauge_metallic_block_properties()
-    { return BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).strength(0.5f, 15f).sound(SoundType.METAL).noCollission().isValidSpawn((s,w,p,e)->false); }
+    { return BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).strength(0.5f, 15f).sound(SoundType.METAL).noCollission().isValidSpawn((s, w, p, e)->false); }
 
     public static final BlockBehaviour.Properties gauge_glass_block_properties()
-    { return (BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).strength(0.5f, 15f).sound(SoundType.METAL).noOcclusion().isValidSpawn((s,w,p,e)->false)); }
+    { return (BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).strength(0.5f, 15f).sound(SoundType.METAL).noOcclusion().isValidSpawn((s,w,p,e)->false)); }
 
     public static final BlockBehaviour.Properties indicator_metallic_block_properties()
-    { return BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).strength(0.5f, 15f).sound(SoundType.METAL).lightLevel((state)->3).noOcclusion().isValidSpawn((s,w,p,e)->false); }
+    { return BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).strength(0.5f, 15f).sound(SoundType.METAL).lightLevel((state)->3).noOcclusion().isValidSpawn((s,w,p,e)->false); }
 
     public static final BlockBehaviour.Properties indicator_glass_block_properties()
-    { return BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).strength(0.5f, 15f).sound(SoundType.METAL).lightLevel((state)->3).noOcclusion().isValidSpawn((s,w,p,e)->false); }
+    { return BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).strength(0.5f, 15f).sound(SoundType.METAL).lightLevel((state)->3).noOcclusion().isValidSpawn((s,w,p,e)->false); }
 
     public static final BlockBehaviour.Properties alarm_lamp_block_properties()
-    { return BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).strength(0.5f, 15f).sound(SoundType.METAL).noOcclusion().lightLevel((state)->state.getValue(IndicatorBlock.POWERED)?12:2).isValidSpawn((s,w,p,e)->false); }
+    { return BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).strength(0.5f, 15f).sound(SoundType.METAL).noOcclusion().lightLevel((state)->state.getValue(IndicatorBlock.POWERED)?12:2).isValidSpawn((s,w,p,e)->false); }
 
     public static final BlockBehaviour.Properties colored_sensitive_glass_block_properties()
-    { return (BlockBehaviour.Properties.of(Material.BUILDABLE_GLASS, MaterialColor.METAL).strength(0.35f, 15f).sound(SoundType.METAL).noOcclusion().isValidSpawn((s,w,p,e)->false)); }
+    { return (BlockBehaviour.Properties.copy(Blocks.GLASS).strength(0.35f, 15f).sound(SoundType.METAL).noOcclusion().isValidSpawn((s,w,p,e)->false)); }
 
     public static final BlockBehaviour.Properties light_emitting_sensitive_glass_block_properties()
-    { return BlockBehaviour.Properties.of(Material.BUILDABLE_GLASS, MaterialColor.METAL).strength(0.35f, 15f).sound(SoundType.METAL).noOcclusion().emissiveRendering((s,w,p)->true).lightLevel((state)->state.getValue(SensitiveGlassBlock.POWERED)?15:0).isValidSpawn((s,w,p,e)->false); }
+    { return BlockBehaviour.Properties.copy(Blocks.GLASS).strength(0.35f, 15f).sound(SoundType.METAL).noOcclusion().emissiveRendering((s,w,p)->true).lightLevel((state)->state.getValue(SensitiveGlassBlock.POWERED)?15:0).isValidSpawn((s,w,p,e)->false); }
 
     public static final BlockBehaviour.Properties switch_metallic_block_properties()
     { return gauge_metallic_block_properties(); }
@@ -68,10 +67,11 @@ public class ModContent
     { return gauge_glass_block_properties(); }
 
     public static final BlockBehaviour.Properties switch_metallic_faint_light_block_properties()
-    { return BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).strength(0.5f, 15f).sound(SoundType.METAL).lightLevel((state)->5); }
+    { return BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).strength(0.5f, 15f).sound(SoundType.METAL).lightLevel((state)->5); }
 
     private static Item.Properties default_item_properties()
-    { return (new Item.Properties()).tab(Registries.getCreativeModeTab()); }
+//    { return (new Item.Properties()).tab(Registries.getCreativeModeTab()); }
+    { return (new Item.Properties()); }
   }
 
   public static void init(String modid)

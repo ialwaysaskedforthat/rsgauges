@@ -8,8 +8,13 @@
  */
 package wile.rsgauges;
 
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -20,10 +25,13 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import wile.rsgauges.detail.BlockCategories;
+import wile.rsgauges.items.ModBlockItem;
 import wile.rsgauges.libmc.detail.Auxiliaries;
 import wile.rsgauges.libmc.detail.OptionalRecipeCondition;
 import wile.rsgauges.libmc.detail.PlayerBlockInteraction;
 import wile.rsgauges.libmc.detail.Registries;
+
+import java.util.List;
 
 
 @Mod("rsgauges")
@@ -46,8 +54,24 @@ public class ModRsGauges
     ModLoadingContext.get().registerConfig(net.minecraftforge.fml.config.ModConfig.Type.COMMON, ModConfig.COMMON_CONFIG_SPEC);
     FMLJavaModLoadingContext.get().getModEventBus().addListener(ForgeEvents::onSetup);
     FMLJavaModLoadingContext.get().getModEventBus().addListener(ForgeEvents::onClientSetup);
+    FMLJavaModLoadingContext.get().getModEventBus().addListener(this::addCreative);
     MinecraftForge.EVENT_BUS.register(this);
     PlayerBlockInteraction.init(MODID, LOGGER);
+  }
+
+  private void addCreative(BuildCreativeModeTabContentsEvent event)
+  {
+    if(event.getTab() == Registries.RSGAUGES_TAB.get())
+    {
+      List<Block> balls = Registries.getRegisteredBlocks();
+      List<Item> cum = Registries.getRegisteredItems();
+
+      balls.forEach((b) -> event.accept(b));
+      cum.forEach((c) -> event.accept(c));
+
+//      event.accept(balls.);
+//      event.accept(cum);
+    }
   }
 
   // -------------------------------------------------------------------------------------------------------------------

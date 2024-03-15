@@ -7,7 +7,7 @@ license="MIT"
 
 [[mods]]
 modId="rsgauges"
-version="${file.jarVersion}"
+version="9999"
 displayName="Gauges and Switches"
 description="Adds redstone metering gauges, levers, buttons, pressure plates, and all sorts of other sensors and detector switches to the game."
 authors="wilechaote"
@@ -26,6 +26,6 @@ logoFile="logo.png"
 [[dependencies.rsgauges]]
   modId="minecraft"
   mandatory=true
-  versionRange="[1.19.2]"
+  versionRange="[1.20.1]"
   ordering="NONE"
   side="BOTH"

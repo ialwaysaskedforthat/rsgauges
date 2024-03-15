@@ -56,11 +56,11 @@ public class BlockCategories
     });
 
     matchers_.put("solid", (final Level w, final BlockPos p) -> {
-      return w.getBlockState(p).getMaterial().isSolid();
+      return w.getBlockState(p).isSolid();
     });
 
     matchers_.put("liquid", (final Level w, final BlockPos p) -> {
-      return (w.getBlockState(p).getMaterial().isLiquid()) || (!w.getFluidState(p).isEmpty());
+      return (w.getBlockState(p).liquid()) || (!w.getFluidState(p).isEmpty());
     });
 
     matchers_.put("air", (final Level w, final BlockPos p) -> {

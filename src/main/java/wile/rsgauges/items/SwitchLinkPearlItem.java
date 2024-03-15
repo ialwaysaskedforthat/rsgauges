@@ -116,7 +116,7 @@ public class SwitchLinkPearlItem extends RsItem
   @Override
   public void inventoryTick(ItemStack stack, Level world, Entity entity, int slot, boolean selected)
   {
-    if((!selected) || (!entity.level.isClientSide()) || (world.getRandom().nextDouble() > 0.3)) return;
+    if((!selected) || (!entity.level().isClientSide()) || (world.getRandom().nextDouble() > 0.3)) return;
     final SwitchLink lnk = SwitchLink.fromItemStack(stack);
     if((!lnk.valid) || (lnk.target_position.distSqr(entity.blockPosition()) > 900)) return;
     Vec3 p = Vec3.atLowerCornerOf(lnk.target_position).add(
