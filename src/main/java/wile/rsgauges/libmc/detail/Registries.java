@@ -69,52 +69,13 @@ public class Registries
   public static final RegistryObject<CreativeModeTab> RSGAUGES_TAB = CREATIVE_MODE_TABS.register(ModRsGauges.MODID,
           () -> CreativeModeTab.builder()
                   .icon(() -> new ItemStack(registered_items.get(creative_tab_icon).get()))
-                  .title(Component.literal("item_grop." + ModRsGauges.MODID + ".example"))
-//                  .displayItems((params, output) -> {
-//                    output.accept();
-//                    output.accept();
-//                  })
+                  .title(Component.literal(ModRsGauges.MODNAME))
                   .build());
-
-//  public static void register(IEventBus eventBus)
-//  {
-//    CREATIVE_MODE_TABS.register(eventBus);
-//  }
-
-//  public static CreativeModeTab getCreativeModeTab()
-//  {
-//    if(creative_tab==null) {
-//      creative_tab = (new CreativeModeTab("tab" + modid) {
-//        public ItemStack makeIcon() { return new ItemStack(registered_items.get(creative_tab_icon).get()); }
-//      });
-//    }
-//    return creative_tab;
-//  }
 
   public static CreativeModeTab getCreativeModeTab()
   {
-//    if(creative_tab==null)
-//    {
-//      creative_tab = RSGAUGES_TAB.get();
-//    }
-//    return creative_tab;
     return RSGAUGES_TAB.get();
   }
-
-//  public class ModCreativeModeTabs
-//  {
-//    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(net.minecraft.core.registries.Registries.CREATIVE_MODE_TAB,
-//            ModRsGauges.MODID);
-//    public static RegistryObject<CreativeModeTab> RSGAUGES_TAB = CREATIVE_MODE_TABS.register(modid,
-//            () -> CreativeModeTab.builder()
-//                    .icon(() -> new ItemStack(registered_items.get(creative_tab_icon).get()))
-//                    .title(Component.literal("BOOBA")).build());
-//
-//    public static void register(IEventBus eventBus)
-//    {
-//      CREATIVE_MODE_TABS.register(eventBus);
-//    }
-//  }
 
   // -------------------------------------------------------------------------------------------------------------
 
@@ -175,7 +136,6 @@ public class Registries
   {
     RegistryObject<Block> block = block_deferred_register.register(registry_name, block_supplier);
     RegistryObject<Item> blockItem = item_deferred_register.register(registry_name,
-//            () -> new BlockItem(block.get(), (new Item.Properties().tab(getCreativeModeTab()))));
             () -> new BlockItem(block.get(), (new Item.Properties())));
     registered_blocks.put(registry_name, block);
     registered_items.put(registry_name, blockItem);
