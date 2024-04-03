@@ -34,6 +34,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.SignalGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -84,7 +85,7 @@ public class AbstractGaugeBlock extends RsDirectedBlock implements EntityBlock, 
   {
     if((world.isClientSide()) || (!isAffectedByNeigbour(state, world, pos, fromPos))) return;
     final GaugeTileEntity te = getTe(world, pos);
-    if(te == null) te.reset_timer();
+    if(te != null) te.reset_timer();
   }
 
   @Override
@@ -132,9 +133,9 @@ public class AbstractGaugeBlock extends RsDirectedBlock implements EntityBlock, 
     }
   }
 
-//  @Override
-//  public boolean shouldCheckWeakPower(BlockState state, LevelReader world, BlockPos pos, Direction side)
-//  { return false; }
+  @Override
+  public boolean shouldCheckWeakPower(BlockState state, SignalGetter level, BlockPos pos, Direction side)
+  { return false; }
 
   @Override
   public boolean getWeakChanges(BlockState state, LevelReader world, BlockPos pos)

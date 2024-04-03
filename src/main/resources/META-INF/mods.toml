@@ -7,7 +7,7 @@ license="MIT"
 
 [[mods]]
 modId="rsgauges"
-version="1.2.19"
+version="1.2.21"
 displayName="Gauges and Switches"
 description="Adds redstone metering gauges, levers, buttons, pressure plates, and all sorts of other sensors and detector switches to the game."
 authors="wilechaote"
