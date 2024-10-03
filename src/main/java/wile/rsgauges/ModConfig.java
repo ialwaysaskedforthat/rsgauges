@@ -50,9 +50,11 @@ public class ModConfig
     public final ForgeConfigSpec.ConfigValue<String> pattern_excludes;
     public final ForgeConfigSpec.ConfigValue<String> pattern_includes;
     public final ForgeConfigSpec.BooleanValue without_switch_linking;
+    public final ForgeConfigSpec.BooleanValue without_sculk_triggering;
     // Misc
     public final ForgeConfigSpec.BooleanValue with_experimental;
     public final ForgeConfigSpec.IntValue max_switch_linking_distance;
+//    public final ForgeConfigSpec.DoubleValue sculk_trigger_threshold;
     public final ForgeConfigSpec.ConfigValue<String> accepted_wrenches;
     public final ForgeConfigSpec.BooleanValue with_config_logging;
     // Tweaks
@@ -90,6 +92,10 @@ public class ModConfig
           .translation(ModRsGauges.MODID + ".config.without_switch_linking")
           .comment("Disables switch remote linking.")
           .define("without_switch_linking", false);
+        without_sculk_triggering = builder
+          .translation(ModRsGauges.MODID + ".config.without_sculk_triggering")
+          .comment("Disables the sculk sensor's response to switches.")
+          .define("without_sculk_triggering", false);
         builder.pop();
       }
       // --- MISC ---------------------------------------------------------------
@@ -106,6 +112,13 @@ public class ModConfig
             "the target to activate it. The value 0 means 'no limitation', " +
             " as long as the target chunk is loaded.")
           .defineInRange("max_switch_linking_distance", 48, 0, 64);
+//        sculk_trigger_threshold = builder
+//          .translation(ModRsGauges.MODID + ".config.max_switch_linking_distance")
+//          .comment(" /// DISABLED /// By default, the sculk sensor will only react to sounds louder than or equal to 0.1f. " +
+//                  "You can select your preferred threshold from the defined ones: " +
+//                  " 1.0  0.2  0.1  0.09  0.05  0.04  0.01  0.0 " +
+//                  "At level 0.0, the sensor will react even to normally silent switches.")
+//          .defineInRange("sculk_trigger_threshold", 0.1, 0.0, 1.0);
         accepted_wrenches = builder
           .translation(ModRsGauges.MODID + ".config.accepted_wrenches")
           .comment("Comma separated list of items names that can be used alter configurable " +
@@ -195,11 +208,13 @@ public class ModConfig
   private static boolean with_config_logging_ = false;
   public static boolean status_overlay_disabled = false;
   public static boolean without_switch_linking = false;
+  public static boolean without_sculk_triggering = false;
   public static boolean without_gauge_weak_power_measurement = false;
   public static boolean without_pulsetime_config = false;
   public static boolean without_switch_nooutput = false;
   public static boolean without_rightclick_item_switchconfig = false;
   public static int max_switch_linking_distance = 16;
+//  public static double sculk_trigger_threshold = 0.1;
   public static int autoswitch_linear_update_interval = 2;
   public static int comparator_switch_update_interval = 2;
   public static int autoswitch_volumetric_update_interval = 2;
@@ -276,7 +291,9 @@ public class ModConfig
     if(with_experimental_features_) Auxiliaries.logInfo("Config: EXPERIMENTAL FEATURES ENABLED.");
     updateOptouts();
     without_switch_linking = COMMON.without_switch_linking.get();
+    without_sculk_triggering = COMMON.without_sculk_triggering.get();
     max_switch_linking_distance = COMMON.max_switch_linking_distance.get();
+//    sculk_trigger_threshold = COMMON.sculk_trigger_threshold.get();
     autoswitch_linear_update_interval = COMMON.autoswitch_linear_update_interval.get();
     comparator_switch_update_interval = COMMON.comparator_switch_update_interval.get();
     autoswitch_volumetric_update_interval = COMMON.autoswitch_volumetric_update_interval.get();

@@ -41,6 +41,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -334,6 +335,9 @@ public class SwitchBlock extends RsDirectedBlock implements EntityBlock, SwitchL
       if(!state.getValue(POWERED)) return;
       world.setBlock(pos, state.setValue(POWERED, false), 1|2|8|16);
       power_off_sound.play(world, pos);
+      if (!ModConfig.without_sculk_triggering && (power_off_sound.volume() >= 0.1f)) {
+        world.gameEvent(player, GameEvent.BLOCK_DEACTIVATE, pos);
+      }
     }
     if(((config &SWITCH_CONFIG_LINK_SENDER)==0) && (!te.nooutput())) {
       notifyNeighbours(world, pos, state, te, false);
@@ -348,6 +352,9 @@ public class SwitchBlock extends RsDirectedBlock implements EntityBlock, SwitchL
     if((te!=null) && (te.on_time_remaining() > 0)) { te.reschedule_block_tick(); return; }
     world.setBlock(pos, (state=state.setValue(POWERED, false)), 1|2|8|16);
     power_off_sound.play(world, pos);
+    if (!ModConfig.without_sculk_triggering && (power_off_sound.volume() >= 0.1f)) {
+      world.gameEvent(GameEvent.BLOCK_DEACTIVATE, pos, GameEvent.Context.of(state));
+    }
     if((config &SWITCH_CONFIG_LINK_SENDER)==0) notifyNeighbours(world, pos, state, te, false);
     if((config & SwitchBlock.SWITCH_CONFIG_LINK_SOURCE_SUPPORT)!=0) {
       if(!te.activateSwitchLinks(0, 0, true)) {
@@ -471,12 +478,26 @@ public class SwitchBlock extends RsDirectedBlock implements EntityBlock, SwitchL
     boolean was_powered = state.getValue(POWERED);
     if((config & (SWITCH_CONFIG_BISTABLE|SWITCH_CONFIG_SENSOR_BLOCKDETECT))!=0) {
       world.setBlock(pos, (state=state.cycle(POWERED)), 1|2|8|16);
-      if(was_powered) power_off_sound.play(world, pos); else power_on_sound.play(world, pos);
+      if (was_powered) {
+        power_off_sound.play(world, pos);
+        if (!ModConfig.without_sculk_triggering && (power_off_sound.volume() >= 0.1f)) {
+          world.gameEvent(player, GameEvent.BLOCK_DEACTIVATE, pos);
+        }
+      }
+      else {
+        power_on_sound.play(world, pos);
+        if (!ModConfig.without_sculk_triggering && (power_on_sound.volume() >= 0.1f)) {
+          world.gameEvent(player, GameEvent.BLOCK_ACTIVATE, pos);
+        }
+      }
     } else {
       world.setBlock(pos, state=state.setValue(POWERED, true), 1|2|8|16);
       power_on_sound.play(world, pos);
+      if (!ModConfig.without_sculk_triggering && (power_on_sound.volume() >= 0.1f)) {
+        world.gameEvent(player, GameEvent.BLOCK_ACTIVATE, pos);
+      }
     }
-    if((config &SWITCH_CONFIG_LINK_SENDER)==0) {
+    if((config & SWITCH_CONFIG_LINK_SENDER)==0) {
       notifyNeighbours(world, pos, state, te, false);
     }
     if((config & SWITCH_CONFIG_PULSE)!=0) {

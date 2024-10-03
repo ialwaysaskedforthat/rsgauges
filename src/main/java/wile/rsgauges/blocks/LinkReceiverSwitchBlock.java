@@ -61,6 +61,9 @@ public class LinkReceiverSwitchBlock extends SwitchBlock
         if(powered) {
           world.setBlock(pos, state.setValue(POWERED, true), 1|2|8|16);
           power_on_sound.play(world, pos);
+//          if (!ModConfig.without_sculk_triggering && (power_on_sound.volume() >= ModConfig.sculk_trigger_threshold)) {
+//            world.gameEvent(GameEvent.BLOCK_ACTIVATE, pos, GameEvent.Context.of(state));
+//          }
           te.on_timer_reset();
           te.on_timer_extend();
           te.reschedule_block_tick();

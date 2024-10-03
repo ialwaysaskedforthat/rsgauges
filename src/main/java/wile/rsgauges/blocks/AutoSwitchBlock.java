@@ -88,6 +88,9 @@ public abstract class AutoSwitchBlock extends SwitchBlock
           if(this instanceof IntervalTimerSwitchTileEntity) ((IntervalTimerSwitchTileEntity)this).restart();
           level.setBlock(worldPosition, (state.setValue(POWERED, true)), 2|8|16);
           block.power_on_sound.play(level, worldPosition);
+//          if (!ModConfig.without_sculk_triggering && (block.power_on_sound.volume() >= ModConfig.sculk_trigger_threshold)) {
+//            level.gameEvent(GameEvent.BLOCK_ACTIVATE, worldPosition, GameEvent.Context.of(state));
+//          }
           level.updateNeighborsAt(worldPosition, block);
           BlockPos np = worldPosition.relative(state.getValue(FACING).getOpposite());
           Block nb = level.getBlockState(np).getBlock();
@@ -102,6 +105,9 @@ public abstract class AutoSwitchBlock extends SwitchBlock
         if((hold_time<=0) || (on_time_remaining() <= 0)) {
           level.setBlock(worldPosition, state.setValue(POWERED, false), 2|8|16);
           block.power_off_sound.play(level, worldPosition);
+//          if (!ModConfig.without_sculk_triggering && (block.power_off_sound.volume() >= ModConfig.sculk_trigger_threshold)) {
+//            level.gameEvent(GameEvent.BLOCK_DEACTIVATE, worldPosition, GameEvent.Context.of(state));
+//          }
           level.updateNeighborsAt(worldPosition, block);
           BlockPos np = worldPosition.relative(state.getValue(FACING).getOpposite());
           Block nb = level.getBlockState(np).getBlock();

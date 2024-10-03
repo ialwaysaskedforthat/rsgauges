@@ -111,6 +111,9 @@ public class ContactSwitchBlock extends SwitchBlock
       state = state.setValue(POWERED, true);
       world.setBlock(pos, state, 1|2|8|16);
       power_on_sound.play(world, pos);
+//      if (!ModConfig.without_sculk_triggering && (power_on_sound.volume() >= ModConfig.sculk_trigger_threshold)) {
+//        world.gameEvent(GameEvent.BLOCK_ACTIVATE, pos, GameEvent.Context.of(state));
+//      }
       notifyNeighbours(world, pos, state, te, false);
       if((config & SwitchBlock.SWITCH_CONFIG_LINK_SOURCE_SUPPORT)!=0) {
         if(!te.activateSwitchLinks(te.setpower(), 15, true)) {

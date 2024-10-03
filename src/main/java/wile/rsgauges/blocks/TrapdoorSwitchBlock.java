@@ -105,6 +105,9 @@ public class TrapdoorSwitchBlock extends ContactSwitchBlock
     if((te==null) || (!te.verifySwitchLinkTarget(link))) return SwitchLink.RequestResult.REJECTED;
     world.setBlock(pos, state.setValue(POWERED, true), 1|2|8|16);
     power_on_sound.play(world, pos);
+//    if (!ModConfig.without_sculk_triggering && (power_on_sound.volume() >= ModConfig.sculk_trigger_threshold)) {
+//      world.gameEvent(GameEvent.BLOCK_ACTIVATE, pos, GameEvent.Context.of(state));
+//    }
     notifyNeighbours(world, pos, state, te, false);
     te.on_timer_reset( (te.configured_on_time()==0) ? (default_pulse_on_time) : (Math.max(te.configured_on_time(), 2)) );
     te.reschedule_block_tick();
